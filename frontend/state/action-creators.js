@@ -16,11 +16,15 @@ export function moveCounterClockwise() {
   }
  }
 //quiz
-export function selectAnswer() { }
+export function selectAnswer() {
+  return 
+ }
 
 export function setMessage() { }
 
-export function setQuiz() { }
+export function setQuiz() { 
+  return fetchQuiz();
+}
 
 //form
 
@@ -49,6 +53,14 @@ export function postAnswer() {
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state
     // - Dispatch the fetching of the next quiz
+    axios.post('http://localhost:9000/api/quiz/next')
+    .then(res => {
+      console.log(res)
+      // dispatch({ type: types.SET_QUIZ_INTO_STATE, payload: res.data })
+    })
+    .catch(err => {
+      console.error(err)
+    })
   }
 }
 export function postQuiz() {

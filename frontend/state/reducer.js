@@ -25,11 +25,7 @@ function wheel(state = initialWheelState, action) {
 // quiz
 
 //set quiz into state
-const initialQuizState = {
-  question_text:'', 
-  true_answer_text:'', 
-  false_answer_text:''
-}
+const initialQuizState = {}
 function quiz(state = initialQuizState, action) {
   switch(action.type){
     case types.SET_QUIZ_INTO_STATE:
@@ -37,7 +33,9 @@ function quiz(state = initialQuizState, action) {
       ...state,
       question_text: action.payload.question,
       true_answer_text: action.payload.answers[0].text,
-      false_answer_text: action.payload.answers[1].text
+      false_answer_text: action.payload.answers[1].text,
+      quiz_id: action.payload.quiz_id,
+      answer_id: action.payload.answers[0].answer_id,
     }
     
     default:
