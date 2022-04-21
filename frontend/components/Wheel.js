@@ -29,6 +29,7 @@ const Wheel= (props) => {
         <div className={`${wheel}` == 4?  "cog active" : "cog" } style={{ "--i": 4 }}>{`${wheel}` == 4?  "B" : "" }</div>
 
         <div className={`${wheel}` == 5?  "cog active" : "cog" } style={{ "--i": 5 }}>{`${wheel}` == 5?  "B" : "" }</div>
+        
         {/* --i is a custom CSS property, no need to touch that nor the style object */}
       </div>
       <div id="keypad">

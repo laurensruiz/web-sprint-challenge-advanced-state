@@ -2,11 +2,12 @@
 import { combineReducers } from 'redux'
 import * as types from './action-types'
 
+// wheel
 const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
   switch(action.type){
     case types.MOVE_CLOCKWISE:
-      if(state ===5){
+      if(state === 5){
         return 0
       } else {
         return state + 1
@@ -21,10 +22,24 @@ function wheel(state = initialWheelState, action) {
       return state
   }
 }
+// quiz
 
-const initialQuizState = null
+//set quiz into state
+const initialQuizState = {
+  question_text:'', 
+  true_answer_text:'', 
+  false_answer_text:''
+}
 function quiz(state = initialQuizState, action) {
   switch(action.type){
+    case types.SET_QUIZ_INTO_STATE:
+    return {
+      ...state,
+      question_text: action.payload.question,
+      true_answer_text: action.payload.answers[0].text,
+      false_answer_text: action.payload.answers[1].text
+    }
+    
     default:
       return state
   }
@@ -46,6 +61,7 @@ function infoMessage(state = initialMessageState, action) {
   }
 }
 
+//form
 const initialFormState = {
   newQuestion: '',
   newTrueAnswer: '',
