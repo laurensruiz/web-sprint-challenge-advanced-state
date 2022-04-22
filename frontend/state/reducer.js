@@ -34,7 +34,7 @@ function quiz(state = initialQuizState, action) {
     return {
       ...state,
       question: action.payload.question,
-      question_id:action.payload.quiz_id,
+      quiz_id:action.payload.quiz_id,
       answers: action.payload.answers
     }
     default:
@@ -58,9 +58,16 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
   }
 }
 
-const initialMessageState = ''
+const initialMessageState = {
+  message:""
+}
 function infoMessage(state = initialMessageState, action) {
   switch(action.type){
+    case types.SET_INFO_MESSAGE:
+      return {
+        ...state,
+        message: action.payload
+      }
     default:
       return state
   }
