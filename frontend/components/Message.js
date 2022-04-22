@@ -3,18 +3,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const mapStatetoProps = state =>{
-  console.log(state.infoMessage)
   return{
-    message: state.infoMessage
+    message: state.infoMessage.message
   }
 }
 
 
  function Message(props) {
- const {message} =props
- console.log(message)
+ const {message} = props
 
-  return <div id="message">Nice job!</div>
+  return <div id="message">{message}</div>
 }
 
 export default connect(mapStatetoProps)(Message)

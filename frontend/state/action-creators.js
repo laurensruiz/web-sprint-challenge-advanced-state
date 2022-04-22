@@ -23,16 +23,14 @@ export function selectAnswer(id) {
   }
  }
 
-export function setMessage() { 
-  return {
-    type: types.SET_INFO_MESSAGE,
-    payload: message
-    
-  }
-}
+export function setMessage(data) {
+  
+  return { type: types.SET_INFO_MESSAGE, payload: data}
+  
+ }
 
-export function setQuiz() { 
-  return fetchQuiz();
+export function setQuiz(data) { 
+  return { type: types.SET_QUIZ_INTO_STATE, payload: data }
 }
 
 //form
@@ -49,8 +47,7 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
     axios.get('http://localhost:9000/api/quiz/next')
     .then(res => {
-      dispatch({ type: types.SET_QUIZ_INTO_STATE, payload: res.data })
-      console.log(res)
+      dispatch(setQuiz(res.data))
     })
     .catch(err => {
       console.error(err)
@@ -59,30 +56,39 @@ export function fetchQuiz() {
 }
 
 export function postAnswer(quiz_id, answer_id) {
- 
   return function (dispatch) {
-    // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
-    // On successful GET:
-    // - Dispatch an action to send the obtained quiz to its state
     axios.post('http://localhost:9000/api/quiz/answer', {quiz_id, answer_id})
     .then(res => {
-      console.log(res.data.message)
-      dispatch({ type: types.SET_INFO_MESSAGE, payload: res.data.message })
+      dispatch(selectAnswer());
+      dispatch(setMessage(res.data.message))
+      dispatch(fetchQuiz())
     })
     .catch(err => {
       console.error(err)
     })
   }
+
 }
 
 
-  // const data = {quiz_id, answer_id}
-  //    // On successful POST:
-  //   // - Dispatch an action to reset the selected answer state
-  //   // - Dispatch an action to set the server message to state
-  //   // - Dispatch the fetching of the next quiz
+  
+//   return function (dispatch) {
+//     // On successful POST:
+//     // - Dispatch an action to reset the selected answer state
+//     // - Dispatch an action to set the server message to state
+//     // - Dispatch the fetching of the next quiz
+//     axios.post('http://localhost:9000/api/quiz/answer', {quiz_id: props.quiz_id, answer_id: props.selectedAnswerID})
+//     .then(res => {
+      
+//       console.log(res)
+//     })
+//     .catch(err => {
+//       console.error(err)
+//     })
+//   }
+// }
+    
 
- 
 
 
 export function postQuiz() {

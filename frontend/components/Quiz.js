@@ -7,7 +7,7 @@ const Quiz =(props) => {
   
   
 
-  const {question, answers, quiz_id, selectedAnswerID, fetchQuiz, setQuiz, selectAnswer, } = props
+  const {question, answers, quiz_id, selectedAnswerID, message, fetchQuiz, selectAnswer, postAnswer} = props
 
   useEffect(()=>{
     fetchQuiz()
@@ -18,9 +18,12 @@ const Quiz =(props) => {
   }
 
   
-  const handlePost = (quiz_id, answer_id)  =>{
+  const handlePost = (quiz_id, answer_id) =>{
     postAnswer(quiz_id, answer_id);
+    
+    
   }
+ 
  
   return (
     <div id="wrapper">
@@ -32,7 +35,7 @@ const Quiz =(props) => {
             <div id="quizAnswers">
               {
                 answers.map( answer =>
-                  <div className='answer'>
+                  <div className={selectedAnswerID === answer.answer_id? 'answer selected':"answer"}>
                     {answer.text}
                   <button onClick={()=> handleSelectAnswer(answer.answer_id)}>
                   {selectedAnswerID === answer.answer_id? 'SELECTED':"Select"}
@@ -41,7 +44,7 @@ const Quiz =(props) => {
               }
             </div>
 
-            <button disabled={selectedAnswerID !== ""? false: true } onClick ={() =>{handlePost(quiz_id, selectedAnswerID)}}id="submitAnswerBtn">Submit answer</button>
+            <button disabled={selectedAnswerID !== ""? false: true } onClick ={() => { handlePost(quiz_id, selectedAnswerID)}}id="submitAnswerBtn">Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
@@ -49,13 +52,13 @@ const Quiz =(props) => {
   )
 }
 const mapStatetoProps = (state) =>{
-  console.log(state)
   return({
     
     question: state.quiz.question,
     quiz_id: state.quiz.quiz_id,
     answers: state.quiz.answers,
     selectedAnswerID: state.selectedAnswer.selectedAnswerID,
+    message: state.infoMessage.message
     
   })
 }

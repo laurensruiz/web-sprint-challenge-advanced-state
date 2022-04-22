@@ -48,7 +48,6 @@ const initialSelectedAnswerState = {
 function selectedAnswer(state = initialSelectedAnswerState, action) {
   switch(action.type){
     case types.SET_SELECTED_ANSWER:
-      console.log(action.payload)
       return {
         ...state,
         selectedAnswerID: action.payload
@@ -65,7 +64,6 @@ function infoMessage(state = initialMessageState, action) {
   switch(action.type){
     case types.SET_INFO_MESSAGE:
       return {
-        ...state,
         message: action.payload
       }
     default:
