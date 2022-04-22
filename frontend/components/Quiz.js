@@ -6,8 +6,16 @@ import { fetchQuiz, setQuiz, selectAnswer, postAnswer } from '../state/action-cr
 const Quiz =(props) => {
   
   
-
-  const {question, answers, quiz_id, selectedAnswerID, message, fetchQuiz, selectAnswer, postAnswer} = props
+  const {
+    //state
+    question, 
+    answers, 
+    quiz_id, 
+    selectedAnswerID, 
+    //actions
+    fetchQuiz, 
+    selectAnswer, 
+    postAnswer} = props
 
   useEffect(()=>{
     fetchQuiz()
