@@ -10,7 +10,7 @@ console.log(props)
     form,
     //method
     inputChange,
-    resetForm
+    postQuiz
 
 
   } = props
@@ -21,6 +21,8 @@ console.log(props)
   }
 
   const onSubmit = evt => {
+    evt.preventDefault();
+    postQuiz(form)
 
   }
 
