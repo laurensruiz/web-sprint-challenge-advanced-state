@@ -16,8 +16,11 @@ export function moveCounterClockwise() {
   }
  }
 //quiz
-export function selectAnswer() {
-  return 
+export function selectAnswer(id) {
+  return {
+    type: types.SET_SELECTED_ANSWER, 
+    payload: id,
+  }
  }
 
 export function setMessage() { }
@@ -47,7 +50,7 @@ export function fetchQuiz() {
     })
   }
 }
-export function postAnswer() {
+export function postAnswer(id) {
   return function (dispatch) {
     // On successful POST:
     // - Dispatch an action to reset the selected answer state

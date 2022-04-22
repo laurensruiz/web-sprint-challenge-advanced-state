@@ -1,50 +1,54 @@
 import React, {  useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchQuiz, setQuiz } from '../state/action-creators'
+import { fetchQuiz, setQuiz, selectAnswer } from '../state/action-creators'
 
 
-const Quiz=(props) => {
-const {quiz, 
-  fetchQuiz,
-  setQuiz} = props
+const Quiz =(props) => {
   
-useEffect(()=>{
+  
+
+  const {question, answers, quiz_id, selectedAnswerID,fetchQuiz, setQuiz, selectAnswer, selectedAnswer} = props
+
+  useEffect(()=>{
     fetchQuiz()
   }, [])
 
- console.log(quiz)
-
-  
+  const handleSelectAnswer = (id) => {
+    selectAnswer(id);
+  }
+ 
   return (
     <div id="wrapper">
       { 
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        !quiz_id ? (
           <>
-            <h2 id={quiz.answer_id}>{quiz.question_text}</h2>
-
+            <h2>{question}</h2>
             <div id="quizAnswers">
-              <div id={quiz.answer_id} className="answer selected">
-                {quiz.true_answer_text}
-                <button>
-                  SELECTED
+              {
+                answers.map( answer =>
+                  <div className='answer'>
+                    {answer.text}
+                  <button onClick={()=> handleSelectAnswer(answer.answer_id)}>
+                  {selectedAnswerID === answer.answer_id? 'SELECTED':"Select"}
                 </button>
-              </div>
-
-              <div className="answer">
-                {quiz.false_answer_text}
-                <button>
-                  Select
-                </button>
-              </div>
+                </div>)
+              }
             </div>
 
-            <button onClick={setQuiz} id="submitAnswerBtn">Submit answer</button>
+            <button disabled={selectedAnswerID !== ""? false: true } onClick ={handlePost}id="submitAnswerBtn">Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
     </div>
   )
 }
-
-export default connect(st=>st, {fetchQuiz, setQuiz})(Quiz)
+const mapStatetoProps = (state) =>{
+  return({
+    question: state.quiz.question,
+    question_id: state.quiz.quiz_id,
+    answers: state.quiz.answers,
+    selectedAnswerID: state.selectedAnswer.selectedAnswerID
+  })
+}
+export default connect(mapStatetoProps, {fetchQuiz, setQuiz, selectAnswer,})(Quiz)
