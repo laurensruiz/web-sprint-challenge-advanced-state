@@ -35,7 +35,7 @@ console.log(props)
       value={form.newTrueAnswer} id="newTrueAnswer" placeholder="Enter true answer" />
       <input maxLength={50} 
       value={form.newFalseAnswer} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn">Submit new quiz</button>
+      <button disabled={form.newQuestion.trim().length > 1 && form.newTrueAnswer.trim().length > 1 && form.newFalseAnswer.trim().length > 1? false:true}id="submitNewQuizBtn">Submit new quiz</button>
     </form>
   )
 }

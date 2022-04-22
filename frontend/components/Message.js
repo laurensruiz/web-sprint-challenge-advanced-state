@@ -8,7 +8,6 @@ const mapStatetoProps = state =>{
   }
 }
 
-
  function Message(props) {
  const {message} = props
 

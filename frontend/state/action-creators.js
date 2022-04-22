@@ -39,9 +39,10 @@ export function inputChange({id, value}) {
   return { type: types.INPUT_CHANGE, payload: {id, value} }
 }
 
-export function resetForm() {
-  return { type: types.RESET_FORM }
+export function resetForm(data) {
+  return { type: types.RESET_FORM, payload: data }
  }
+
 
 // ❗ Async action creators
 export function fetchQuiz() {
@@ -60,6 +61,7 @@ export function fetchQuiz() {
 }
 
 export function postAnswer(quiz_id, answer_id) {
+  // reset selected answer, set the message, and fetch new quiz
   return function (dispatch) {
     axios.post('http://localhost:9000/api/quiz/answer', {quiz_id, answer_id})
     .then(res => {
@@ -76,9 +78,6 @@ export function postAnswer(quiz_id, answer_id) {
 
 
 
-    
-
-
 
 export function postQuiz(form) {
   return function (dispatch) {
@@ -87,8 +86,9 @@ export function postQuiz(form) {
     // - Dispatch the resetting of the form
     axios.post('http://localhost:9000/api/quiz/new', { question_text: form.newQuestion, true_answer_text: form.newTrueAnswer, false_answer_text:form.newFalseAnswer})
     .then(res => {
-     console.log(res)
-     dispatch(setMessage(`Congrats: ${res.data.question} is a great question!`))
+      console.log(res.data)
+     dispatch(resetForm(res.data))
+     dispatch(setMessage(`Congrats: "${res.data.question}" is a great question!`))
     })
     .catch(err => {
       console.error(err)

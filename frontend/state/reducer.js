@@ -37,6 +37,14 @@ function quiz(state = initialQuizState, action) {
       quiz_id:action.payload.quiz_id,
       answers: action.payload.answers
     }
+    case types.RESET_FORM:
+
+      return {
+        ...state, 
+        question: action.payload.question,
+        quiz_id:action.payload.quiz_id,
+        answers: action.payload.answers
+      }
     default:
       return state
   }
